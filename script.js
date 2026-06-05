@@ -2,7 +2,6 @@
 // 1. KHỞI TẠO ĐỐI TƯỢNG VÀ THIẾT LẬP WIDGET ĐIỀU KHIỂN GIAO DIỆN
 // =========================================================================
 
-// --- Widget Quạt Thông Gió (Thay thế Bed Light - Chân V2) ---
 const fanIcon = document.getElementById("fanIcon");
 const fanStatus = document.getElementById("fanStatus");
 let isFanOn = false;
@@ -20,7 +19,6 @@ fanIcon.addEventListener("click", () => {
   }
 });
 
-// --- Widget Máy Bơm Nước Slider (Thay thế Kitchen Lights - Chân V3) ---
 const pumpSlider = document.getElementById("pumpSlider");
 const pumpValue = document.getElementById("pumpValue");
 const sliderFill = document.querySelector(".slider-fill");
@@ -33,12 +31,11 @@ pumpSlider.addEventListener("input", function () {
     if (actionPumpOn) eraWidget.triggerAction(actionPumpOn.action, null);
   } else {
     sliderFill.style.width = "0%";
-    pumpValue.textContent = "T T";
+    pumpValue.textContent = "TẮT";
     if (actionPumpOff) eraWidget.triggerAction(actionPumpOff.action, null);
   }
 });
 
-// --- Widget Chế Độ Hệ Thống Slider (Thay thế Living Room Lights - Chân V4) ---
 const modeSlider = document.getElementById("modeSlider");
 const modeStatus = document.getElementById("modeStatus");
 const sliderFillMode = document.querySelector(".slider-fill-livingRoom");
@@ -148,7 +145,6 @@ function updateHumidGauge(newVal) {
   }
 }
 
-// Xử lý nút xem lịch sử / dữ liệu
 document.querySelectorAll(".time-range").forEach((button) => {
   button.addEventListener("click", function () {
     document.querySelectorAll(".time-range").forEach((btn) => btn.classList.remove("active"));
@@ -184,19 +180,19 @@ document.addEventListener("DOMContentLoaded", () => {
 // 3. KẾT NỐI VÀ ĐỒNG BỘ DỮ LIỆU QUA DỊCH VỤ E-RA PLATFORM
 // =========================================================================
 const eraWidget = new EraWidget();
-let configTemp = null, configHumi = null, configLux = null;
+// Khai báo thêm biến configWater
+let configTemp = null, configHumi = null, configLux = null, configWater = null; 
 let actionFanOn = null, actionFanOff = null;
 let actionPumpOn = null, actionPumpOff = null;
 let actionAutoOn = null, actionAutoOff = null;
 
 eraWidget.init({
   onConfiguration: (configuration) => {
-    // Thu thập cấu hình cảm biến từ Realtime Configs xếp từ trên xuống dưới
     configTemp = configuration.realtime_configs[0];
     configHumi = configuration.realtime_configs[1];
-    configLux  = configuration.realtime_configs[2]; // Gán thêm chân ánh sáng nếu muốn hiển thị
+    configLux  = configuration.realtime_configs[2]; 
+    configWater = configuration.realtime_configs[3]; // Gán cấu hình Mực Nước (Vị trí 4)
 
-    // Thu thập các cặp Action định nghĩa trên E-Ra tương ứng thứ tự
     actionFanOn   = configuration.actions[0];
     actionFanOff  = configuration.actions[1];
     actionPumpOn  = configuration.actions[2];
@@ -224,7 +220,15 @@ eraWidget.init({
       if (valLuxElement) valLuxElement.textContent = luxValue + " lx";
     }
 
-    // Cập nhật cả 2 giá trị vào biểu đồ đường song song
+    // Xử lý cập nhật thông số Mực Nước
+    if (configWater && values[configWater.id]) {
+      const waterValue = values[configWater.id].value;
+      const waterLevelDisplay = document.getElementById("waterLevelDisplay");
+      if (waterLevelDisplay) {
+        waterLevelDisplay.innerHTML = `<i class="fas fa-water"></i> Mực nước: ${waterValue} %`;
+      }
+    }
+
     if (!isNaN(currentTemp) || !isNaN(currentHum)) {
       updateChart(currentHum, currentTemp);
     }
