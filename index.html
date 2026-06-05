@@ -17,7 +17,8 @@
   <body>
     <div class="container">
       <div class="sidebar">
-        <i class="fas fa-seedling active"> </i> <i class="fas fa-tint"> </i>
+        <i class="fas fa-seedling active"> </i> 
+        <i class="fas fa-tint"> </i>
         <i class="fas fa-fan"> </i>
         <i class="fas fa-chart-line"> </i>
         <i class="fas fa-cogs"> </i>
@@ -63,14 +64,7 @@
             </div>
             <div class="slider-container">
               <div class="slider-track">
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  value="0"
-                  class="brightness-slider"
-                  id="pumpSlider"
-                />
+                <input type="range" min="0" max="1" value="0" class="brightness-slider" id="pumpSlider" />
                 <div class="slider-fill"></div>
               </div>
             </div>
@@ -88,14 +82,7 @@
             </div>
             <div class="slider-container">
               <div class="slider-track">
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  value="1"
-                  class="brightness-sliderLivingRom"
-                  id="modeSlider"
-                />
+                <input type="range" min="0" max="1" value="1" class="brightness-sliderLivingRom" id="modeSlider" />
                 <div class="slider-fill-livingRoom"></div>
               </div>
             </div>
@@ -128,14 +115,14 @@
           <div class="widget weather-widget">
             <div class="weather-header">
               <div class="weather-main">
-                <h1 class="weather-title">Thời Tiết Vườn</h1>
-                <div class="weather-subtitle">Hôm nay</div>
-                <div class="weather-temp" id="weatherBoxTemp">--°C</div>
+                <h1 class="weather-title"><i class="fas fa-seedling"></i> Độ Ẩm Đất</h1>
+                <div class="weather-subtitle">Cảm biến Soil</div>
+                <div class="weather-temp" id="valSoil">--%</div>
               </div>
             </div>
             <div class="canvas-container" id="weather-canvas">
               <div class="iconWeather">
-                <img src="assets/imgs/rainy.png" alt="icon" onerror="this.src='https://img.icons8.com/fluency/96/rain.png'"/>
+                <img src="assets/imgs/soil.png" alt="icon" onerror="this.src='https://img.icons8.com/fluency/96/potted-plant.png'"/>
               </div>
             </div>
           </div>
@@ -145,7 +132,9 @@
               <div class="weather-main">
                 <h1 class="weather-title" style="font-size: 1.2rem;"><i class="fas fa-sun"></i> Ánh Sáng BH1750</h1>
                 <div class="weather-temp" id="valLux" style="font-size: 2rem; margin-top: 10px;">0 lx</div>
-                <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.8;" id="soilStatus">Đất: -- | Nước: --</p>
+                <p style="margin-top: 15px; font-size: 1.1rem; font-weight: bold; color: #4fc3f7; opacity: 0.9;" id="waterLevelDisplay">
+                  <i class="fas fa-water"></i> Mực nước: -- %
+                </p>
               </div>
             </div>
           </div>
