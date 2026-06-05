@@ -2,7 +2,6 @@
 // 1. KHỞI TẠO ĐỐI TƯỢNG VÀ THIẾT LẬP WIDGET ĐIỀU KHIỂN GIAO DIỆN
 // =========================================================================
 
-// --- Widget Quạt Thông Gió (Thay thế Bed Light - Chân V2) ---
 const fanIcon = document.getElementById("fanIcon");
 const fanStatus = document.getElementById("fanStatus");
 let isFanOn = false;
@@ -20,7 +19,6 @@ fanIcon.addEventListener("click", () => {
   }
 });
 
-// --- Widget Máy Bơm Nước Slider (Thay thế Kitchen Lights - Chân V3) ---
 const pumpSlider = document.getElementById("pumpSlider");
 const pumpValue = document.getElementById("pumpValue");
 const sliderFill = document.querySelector(".slider-fill");
@@ -33,12 +31,11 @@ pumpSlider.addEventListener("input", function () {
     if (actionPumpOn) eraWidget.triggerAction(actionPumpOn.action, null);
   } else {
     sliderFill.style.width = "0%";
-    pumpValue.textContent = "T T";
+    pumpValue.textContent = "TẮT";
     if (actionPumpOff) eraWidget.triggerAction(actionPumpOff.action, null);
   }
 });
 
-// --- Widget Chế Độ Hệ Thống Slider (Thay thế Living Room Lights - Chân V4) ---
 const modeSlider = document.getElementById("modeSlider");
 const modeStatus = document.getElementById("modeStatus");
 const sliderFillMode = document.querySelector(".slider-fill-livingRoom");
@@ -136,7 +133,6 @@ function updateTempGauge(newVal) {
   if (gauge) {
     gauge.style.setProperty("--value", newVal);
     document.getElementById("valTemp").textContent = newVal + "°C";
-    document.getElementById("weatherBoxTemp").textContent = newVal + "°C";
   }
 }
 
@@ -148,7 +144,6 @@ function updateHumidGauge(newVal) {
   }
 }
 
-// Xử lý nút xem lịch sử / dữ liệu
 document.querySelectorAll(".time-range").forEach((button) => {
   button.addEventListener("click", function () {
     document.querySelectorAll(".time-range").forEach((btn) => btn.classList.remove("active"));
@@ -184,19 +179,19 @@ document.addEventListener("DOMContentLoaded", () => {
 // 3. KẾT NỐI VÀ ĐỒNG BỘ DỮ LIỆU QUA DỊCH VỤ E-RA PLATFORM
 // =========================================================================
 const eraWidget = new EraWidget();
-let configTemp = null, configHumi = null, configLux = null;
+let configTemp = null, configHumi = null, configLux = null, configSoil = null, configWater = null; 
 let actionFanOn = null, actionFanOff = null;
 let actionPumpOn = null, actionPumpOff = null;
 let actionAutoOn = null, actionAutoOff = null;
 
 eraWidget.init({
   onConfiguration: (configuration) => {
-    // Thu thập cấu hình cảm biến từ Realtime Configs xếp từ trên xuống dưới
-    configTemp = configuration.realtime_configs[0];
-    configHumi = configuration.realtime_configs[1];
-    configLux  = configuration.realtime_configs[2]; // Gán thêm chân ánh sáng nếu muốn hiển thị
+    configTemp = configuration.realtime_configs[0]; // Vị trí 1: Nhiệt độ
+    configHumi = configuration.realtime_configs[1]; // Vị trí 2: Độ ẩm không khí
+    configLux  = configuration.realtime_configs[2]; // Vị trí 3: Ánh sáng
+    configSoil = configuration.realtime_configs[3]; // Vị trí 4: Độ ẩm đất
+    configWater = configuration.realtime_configs[4]; // Vị trí 5: Mực nước
 
-    // Thu thập các cặp Action định nghĩa trên E-Ra tương ứng thứ tự
     actionFanOn   = configuration.actions[0];
     actionFanOff  = configuration.actions[1];
     actionPumpOn  = configuration.actions[2];
@@ -205,28 +200,49 @@ eraWidget.init({
     actionAutoOff = configuration.actions[5];
   },
   onValues: (values) => {
-    let currentTemp = NaN;
-    let currentHum = NaN;
+    let currentTempRaw = NaN;
+    let currentHumRaw = NaN;
 
+    // Cập nhật Nhiệt độ
     if (configTemp && values[configTemp.id]) {
-      currentTemp = values[configTemp.id].value;
-      updateTempGauge(currentTemp);
+      currentTempRaw = values[configTemp.id].value;
+      const roundedTemp = Number(currentTempRaw).toFixed(1);
+      updateTempGauge(roundedTemp);
     }
 
+    // Cập nhật Độ ẩm không khí
     if (configHumi && values[configHumi.id]) {
-      currentHum = values[configHumi.id].value;
-      updateHumidGauge(currentHum);
+      currentHumRaw = values[configHumi.id].value;
+      const roundedHum = Number(currentHumRaw).toFixed(1);
+      updateHumidGauge(roundedHum);
     }
 
+    // Cập nhật Ánh sáng (Kèm làm tròn số)
     if (configLux && values[configLux.id]) {
-      const luxValue = values[configLux.id].value;
+      const luxValue = Number(values[configLux.id].value).toFixed(1);
       const valLuxElement = document.getElementById("valLux");
       if (valLuxElement) valLuxElement.textContent = luxValue + " lx";
     }
 
-    // Cập nhật cả 2 giá trị vào biểu đồ đường song song
-    if (!isNaN(currentTemp) || !isNaN(currentHum)) {
-      updateChart(currentHum, currentTemp);
+    // Cập nhật Độ Ẩm Đất (Kèm làm tròn số)
+    if (configSoil && values[configSoil.id]) {
+      const soilValue = Number(values[configSoil.id].value).toFixed(1);
+      const valSoilElement = document.getElementById("valSoil");
+      if (valSoilElement) valSoilElement.textContent = soilValue + " %";
+    }
+
+    // Cập nhật Mực Nước (Kèm làm tròn số)
+    if (configWater && values[configWater.id]) {
+      const waterValue = Number(values[configWater.id].value).toFixed(1);
+      const waterLevelDisplay = document.getElementById("waterLevelDisplay");
+      if (waterLevelDisplay) {
+        waterLevelDisplay.innerHTML = `<i class="fas fa-water"></i> Mực nước: ${waterValue} %`;
+      }
+    }
+
+    // Cập nhật Biểu đồ (Sử dụng giá trị thô dạng Number)
+    if (!isNaN(currentTempRaw) || !isNaN(currentHumRaw)) {
+      updateChart(Number(currentHumRaw), Number(currentTempRaw));
     }
   },
 });
