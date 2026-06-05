@@ -1,0 +1,1935 @@
+/* Base styles */
+:root {
+  --primary: #1976d2;
+  --surface: rgba(47, 46, 46, 0.6);
+  --surface-variant: rgba(45, 45, 45, 0.8);
+  --text-primary: rgba(255, 255, 255, 0.87);
+  --text-secondary: rgba(255, 255, 255, 0.6);
+  --accent: #ff9800;
+}
+
+body {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  /* background: linear-gradient(135deg, #1a1a1a, #2d2d2d); */
+  color: var(--text-primary);
+  min-height: 100vh;
+  backdrop-filter: blur(20px);
+  background-image: url(imgs/must1.jpg);
+  /* background-position: center; */
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* Glass morphism container */
+.container {
+  display: flex;
+  min-height: 100vh;
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(10px);
+  /* background-image: url(imgs/violet-pink-back.jpg); */
+  position: relative;
+}
+
+.container > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Enhanced sidebar */
+.sidebar {
+  width: 80px;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  transition: width 0.3s ease;
+}
+
+.sidebar i {
+  font-size: 24px;
+  margin: 20px 0;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.sidebar i:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  color: var(--text-primary);
+}
+
+.sidebar .active {
+  color: var(--primary);
+  background: rgba(25, 118, 210, 0.2);
+}
+
+/* Main content area */
+.main-content {
+  flex: 1;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Navigation */
+.nav {
+  background: var(--surface);
+  padding: 16px 24px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.nav a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav a.active {
+  background: var(--primary);
+  color: white;
+}
+
+/* Widget grid */
+.widgets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto auto auto;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Enhanced widgets */
+.widget {
+  /* background: var(--surface); */
+  background: linear-gradient(
+    180deg,
+    rgba(22, 24, 32, 0.5) 0%,
+    rgba(32, 34, 42, 0.7) 100%
+  ) !important;
+  border-radius: 16px;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.widget:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.widget::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.widget:hover::before {
+  opacity: 1;
+}
+.music-widget {
+  max-height: 570px;
+  overflow-y: auto;
+}
+
+/* Custom scrollbar styling */
+.music-widget::-webkit-scrollbar {
+  width: 8px;
+}
+
+.music-widget::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.music-widget::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.music-widget::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Firefox scrollbar styling */
+.music-widget {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1);
+}
+@media (max-width: 1460px) {
+  .airConditioner {
+    grid-column: span 1;
+    min-width: auto;
+    max-width: 380px;
+    min-width: min(100%, 600px);
+  }
+
+  .main-controls {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+    margin-top: -2rem;
+  }
+
+  .temperature-control {
+    width: 60px;
+    height: 60px;
+  }
+
+  .ac-image img {
+    max-width: 12rem;
+  }
+  .right-controls {
+    width: 100%;
+    align-items: center;
+  }
+}
+
+@media (min-width: 1461px) {
+  .airConditioner {
+    width: 100%;
+    max-width: 700px;
+  }
+}
+.cleaning-widget,
+.humidifier-widget,
+.temp-widget {
+  max-height: 350px;
+}
+/* Animated gauges */
+.gauge {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gauge::before {
+  content: "";
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: var(--surface-variant);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.gauge .value {
+  position: relative;
+  z-index: 2;
+  font-size: 28px;
+  font-weight: 500;
+}
+
+/* Properties of humidifier gauge */
+.gauge.humidifier.neon {
+  --size: 150px; /* Đường kính gauge */
+  --thickness: 15px; /* Độ dày vòng gauge */
+  --bg-color: #1b1b1b; /* Màu nền của vòng gauge */
+  --fill-color: #2196f3; /* Màu vòng “đã lấp đầy” (thể hiện %) */
+  --neon-color: #2196f3; /* Màu neon phát sáng */
+  --value: 68; /* Phần trăm lấp đầy (0 - 100) */
+
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  margin: 20px auto;
+}
+
+/* Vòng tròn nền (dial) */
+.gauge.humidifier.neon .dial {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: var(--bg-color);
+  /* Tạo hiệu ứng phát sáng nhẹ cho nền */
+  box-shadow: 0 0 20px var(--bg-color);
+}
+
+/* Vòng tròn fill hiển thị % (conic-gradient) */
+.gauge.humidifier.neon .fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  /* Lấp đầy theo % sử dụng conic-gradient */
+  background: conic-gradient(
+    var(--fill-color) calc(var(--value) * 1%),
+    transparent calc(var(--value) * 1%)
+  );
+
+  /* Xoay -90deg để bắt đầu từ đỉnh trên */
+  transform: rotate(-90deg);
+
+  /* Hiệu ứng neon cho vòng tròn fill */
+  box-shadow: 0 0 15px var(--neon-color);
+  transition: width 0.8s ease-out; /* Tạo hiệu ứng chuyển mượt */
+}
+
+/* Tạo phần “khoét” bên trong để thành dạng vòng */
+.gauge.humidifier.neon::after {
+  content: "";
+  position: absolute;
+  top: var(--thickness);
+  left: var(--thickness);
+  width: calc(var(--size) - (var(--thickness) * 2));
+  height: calc(var(--size) - (var(--thickness) * 2));
+  background: #000; /* Màu nền bên trong */
+  border-radius: 50%;
+  /* Ánh sáng bên trong */
+  box-shadow: inset 0 0 15px var(--neon-color);
+}
+.widget.humidifier-widget,
+.widget.temp-widget {
+  max-height: 250px;
+}
+.widget.bedLight-widget,
+.widget.apple-style,
+.widget.livingRoom-widget {
+  min-height: 250px;
+}
+.gauge.temp.neon {
+  --size: 150px; /* Đường kính gauge */
+  --thickness: 15px; /* Độ dày vòng gauge */
+  --bg-color: #1b1b1b; /* Màu nền của vòng gauge */
+  --fill-color: #ff5500; /* Màu vòng “đã lấp đầy” (thể hiện %) */
+  --neon-color: #ff4400; /* Màu neon phát sáng */
+  --value: 68; /* Phần trăm lấp đầy (0 - 100) */
+
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  margin: 20px auto;
+}
+/* Vòng tròn nền (dial) */
+.gauge.temp.neon .dial {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: var(--bg-color);
+  /* Tạo hiệu ứng phát sáng nhẹ cho nền */
+  box-shadow: 0 0 20px var(--bg-color);
+}
+/* Vòng tròn fill hiển thị % (conic-gradient) */
+.gauge.temp.neon .fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  /* Lấp đầy theo % sử dụng conic-gradient */
+  background: conic-gradient(
+    var(--fill-color) calc(var(--value) * 1%),
+    transparent calc(var(--value) * 1%)
+  );
+  /* Xoay -90deg để bắt đầu từ đỉnh trên */
+  transform: rotate(-90deg);
+
+  /* Hiệu ứng neon cho vòng tròn fill */
+  box-shadow: 0 0 15px var(--neon-color);
+}
+.gauge.temp.neon::after {
+  content: "";
+  position: absolute;
+  top: var(--thickness);
+  left: var(--thickness);
+  width: calc(var(--size) - (var(--thickness) * 2));
+  height: calc(var(--size) - (var(--thickness) * 2));
+  background: #000; /* Màu nền bên trong */
+  border-radius: 50%;
+  box-shadow: inset 0 0 15px var(--neon-color);
+}
+
+/* Hiển thị giá trị % ở giữa gauge */
+.gauge.temp.neon .value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: calc(var(--size) / 5);
+  color: #f5fbff;
+  text-shadow: 0 0 5px var(--fill-color);
+  font-weight: bold;
+  pointer-events: none;
+}
+
+/* Hiển thị giá trị % ở giữa gauge */
+.gauge.temp.neon.value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: calc(var(--size) / 5);
+  color: var(--fill-color);
+  text-shadow: 0 0 5px var(--fill-color);
+  font-weight: bold;
+  pointer-events: none;
+}
+/***********************************************************
+/* Khu vực controls*/
+.controls {
+  display: flex;
+}
+
+.controls button {
+  flex: 1; /* Chia đều không gian cho mỗi nút */
+  background: none;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+}
+
+.controls button.active {
+  background: #2196f3;
+  color: #fff;
+}
+
+.controls button:not(:last-child) {
+  border-right: 1px solid #ccc;
+}
+.gauge.heatpump {
+  background: conic-gradient(
+    from 0deg,
+    #ff5722 0%,
+    #ff5722 20%,
+    transparent 20%
+  );
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.gauge.pergola {
+  background: conic-gradient(
+    from 0deg,
+    #9c27b0 0%,
+    #9c27b0 50%,
+    transparent 50%
+  );
+  border-radius: 50%;
+}
+
+/* Control buttons */
+.widget .controls {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.widget .controls button {
+  background: var(--surface-variant);
+  border: none;
+  color: var(--text-primary);
+  padding: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.widget .controls button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.widget .controls button.active {
+  background: var(--primary);
+  color: white;
+}
+
+/* Weather widget enhancement */
+.widget .weather-forecast {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.weather-day {
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.weather-day:hover {
+  transform: translateY(-4px);
+}
+
+.light-widget {
+  background: rgba(28, 28, 30, 0.9);
+  border-radius: 16px;
+  padding: 16px;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+}
+
+.widget-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff2d55;
+}
+
+.widget-info {
+  flex: 1;
+}
+
+.widget-title {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  margin-left: 15px;
+  white-space: nowrap;
+}
+.widget-valueLivingRoom,
+.widget-value {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 16px;
+  margin-left: 15px;
+}
+.canvas-container-img {
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+
+.slider-container {
+  width: 100%;
+  max-width: 300px;
+  height: 52px;
+  box-sizing: border-box;
+  margin-top: 20%;
+}
+
+.slider-fill {
+  position: absolute;
+  background: linear-gradient(90deg, #fa8836, #44eef7bc);
+  top: 0;
+  left: 0;
+  width: 71%;
+  height: 100%;
+  border-radius: 6px;
+}
+
+.slider-fill-livingRoom {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 71%;
+  height: 100%;
+  background: linear-gradient(90deg, #ff8095, #ffb5b5);
+  border-radius: 6px;
+}
+.slider-thumb {
+  position: absolute;
+  top: 0;
+  right: 29%; /* 100% - 71% */
+  width: 3px;
+  height: 100%;
+  background: white;
+}
+
+.brightness-slider {
+  width: 100%;
+  height: 5%;
+  -webkit-appearance: none;
+  background: transparent;
+  position: relative;
+  z-index: 2;
+  border-radius: 20px;
+  margin-left: -5%;
+}
+.slider-track {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.brightness-sliderLivingRom {
+  width: 100%;
+  height: 5%;
+  -webkit-appearance: none;
+  background: transparent;
+  position: relative;
+  z-index: 2;
+  border-radius: 20px;
+  margin-left: -5%;
+}
+.brightness-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 4px;
+  height: 52px;
+  background: white;
+  cursor: pointer;
+  border: none;
+}
+.brightness-sliderLivingRom::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 4px;
+  height: 52px;
+  background: white;
+  cursor: pointer;
+  border: none;
+}
+
+/* Khi đèn bật, toàn bộ widget sẽ có background trắng mờ */
+.widget:has(.light-icon.active) {
+  background: rgba(90, 86, 86, 0.1) !important;
+  backdrop-filter: blur(5px);
+  /* box-shadow: 0 0 35px rgba(255, 255, 255, 0.7); */
+  color: #ffd700;
+  background: rgba(255, 215, 0, 0.15);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.8),
+    /* Lớp sáng trắng bên trong */ 0 0 45px rgba(255, 215, 0, 0.6); /* Lớp sáng vàng bên ngoài */
+  color: #fff; /* Màu chữ trắng để nổi bật */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Viền mờ tạo độ sâu */
+  transition: all 0.3s ease; /* Hiệu ứng mượt mà khi chuyển trạng thái */
+}
+
+.title {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.light-icon {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  padding: 15px;
+  border-radius: 50%;
+}
+
+.light-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* .light-icon.active {
+  color: #ffd700;
+  background: rgba(255, 215, 0, 0.15);
+  animation: glow 1.5s ease-in-out infinite alternate;
+} */
+
+.status {
+  position: absolute;
+  bottom: 75px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 17px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  /* Thêm padding để tạo khoảng cách với viền tròn */
+  padding: 8px 16px;
+  /* Tạo viền tròn */
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+}
+
+.widget:has(.light-icon.active) .status {
+  color: #ffffff;
+  border-color: #ffffff;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.8),
+    0 0 10px rgba(255, 255, 255, 0.6), inset 0 0 5px rgba(255, 255, 255, 0.6);
+}
+.widget:has(.light-icon.active) .status {
+  color: #ffffff;
+}
+
+/* Animation for light glow effect */
+@keyframes glow {
+  from {
+    box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ffd700, 0 0 20px #ffd700,
+      inset 0 0 10px rgba(255, 215, 0, 0.3);
+  }
+  to {
+    box-shadow: 0 0 10px #fff, 0 0 20px #ffd700, 0 0 30px #ffd700,
+      0 0 40px #ffd700, inset 0 0 20px rgba(255, 215, 0, 0.5);
+  }
+}
+
+.weather-widget {
+  background: linear-gradient(
+    180deg,
+    rgba(22, 24, 32, 0.7) 0%,
+    rgba(32, 34, 42, 0.8) 100%
+  );
+  border-radius: 20px;
+  padding: 16px;
+  color: white;
+  width: 100%;
+  max-width: 380px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+.airConditioner,
+.livingRoom-widget {
+  width: 100%;
+  max-width: 380px;
+}
+.weather-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.weather-main {
+  flex: 1;
+}
+
+.weather-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.weather-subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.weather-temp {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 8px 0;
+  background: linear-gradient(120deg, #fff, #ffe5b4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.canvas-container {
+  width: 120px;
+  height: 120px;
+  position: relative;
+  margin: 0 auto;
+  cursor: move;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.forecast {
+  margin-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 12px;
+  overflow-x: auto;
+}
+
+.forecast-scroll {
+  display: flex;
+  gap: 16px;
+  padding: 4px 0;
+}
+
+.forecast-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 45px;
+  text-align: center;
+}
+
+.forecast-day span {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 4px;
+}
+
+.forecast-temps {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+}
+
+.high-temp {
+  color: #ff8a00;
+  font-weight: 600;
+}
+
+.low-temp {
+  color: #60a5fa;
+}
+
+/* Hide scrollbar but keep functionality */
+.forecast::-webkit-scrollbar {
+  display: none;
+}
+
+.forecast {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/*========Cleaning Widget===========*/
+.countdown-container {
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(145deg, #c5c5c500, #ffffff0a);
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.countdown-title {
+  font-size: 1.2rem;
+  color: #374151;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.countdown-title i {
+  color: #ffffff;
+  animation: pulse 2s infinite;
+}
+
+.countdown-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.countdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 60px;
+}
+
+.countdown-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #3b82f6;
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-width: 70px;
+  position: relative;
+  overflow: hidden;
+}
+
+.countdown-number::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+  animation: slideLine 2s linear infinite;
+}
+
+.countdown-label {
+  font-size: 0.8rem;
+  color: #ffffff;
+  margin-top: 5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.countdown-separator {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #3b82f6;
+  animation: blink 1s infinite;
+}
+
+/* Button enhancements */
+.effect-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+  padding: 12px 34px;
+  background: linear-gradient(145deg, #4caf50, #45a049);
+}
+
+.effect-button i {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.effect-button:hover i {
+  transform: scale(1.2);
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes slideLine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes countdownFlip {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(360deg);
+  }
+}
+
+.countdown-number.flip {
+  animation: countdownFlip 0.6s ease-in-out;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 15px;
+}
+
+.effect-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background: var(--primary);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.effect-button:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transition: all 0.5s;
+}
+
+.effect-button:hover:before {
+  left: 100%;
+}
+
+.effect-button:active {
+  transform: scale(0.95);
+}
+
+/* Modal styles */
+/* CSS cho container */
+.container {
+  position: relative; /* Để modal có thể định vị tương đối với container */
+}
+
+/* Modal styles */
+.modal {
+  display: none;
+  position: absolute; /* Thay đổi từ fixed thành absolute */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-content {
+  position: absolute;
+  background-color: linear-gradient(145deg, #e8e3e3ef, #eadfdf0a);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 5px;
+  width: 80%;
+  max-width: 500px;
+  animation: modalFadeIn 0.3s;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.close {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #777;
+}
+
+/* Thêm media queries để đảm bảo modal responsive */
+@media screen and (max-width: 768px) {
+  .modal-content {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+.close {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #777;
+}
+/*==========Music Widget==========*/
+.widget.music-widget {
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
+  background: linear-gradient(135deg, #1e1e1e, #121212);
+  color: white;
+  border-radius: 12px;
+  padding: 20px;
+  width: 345px;
+  font-family: "Arial", sans-serif;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.title-musicWidget {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.title-airConditioner {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.subtitle-musicWidget {
+  font-size: 14px;
+  color: #b3b3b3;
+  margin-bottom: 20px;
+}
+
+.player-musicWidget {
+  margin-bottom: 20px;
+}
+
+.songInfo-musicWidget {
+  margin-bottom: 10px;
+}
+
+.songTitle-musicWidget {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.artistName-musicWidget {
+  font-size: 16px;
+  color: #ffffff;
+  margin-left: 6%;
+}
+
+.progressBar-musicWidget {
+  background: #404040;
+  height: 4px;
+  border-radius: 2px;
+  position: relative;
+  margin-bottom: 5px;
+}
+
+.progress-musicWidget {
+  background: #1db954;
+  height: 100%;
+  width: 0%;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.duration-musicWidget {
+  font-size: 12px;
+  color: #b3b3b3;
+  text-align: right;
+}
+
+.controls-musicWidget {
+  display: flex;
+  justify-content: space-between;
+}
+
+.controls-musicWidget button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  transition: color 0.2s ease;
+}
+
+.controls-musicWidget button:hover {
+  color: #1db954;
+}
+
+.albumArt-musicWidget {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 20px;
+}
+
+.albumCover-musicWidget {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.vinylRecord-musicWidget {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(1.1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.vinylRing-musicWidget {
+  width: 90%;
+  height: 90%;
+  border: 2px solid #333;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.vinylArt-musicWidget {
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.albumArt-musicWidget.playing .vinylRecord-musicWidget {
+  opacity: 1;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.vinylRecord-musicWidget.rotate {
+  animation: rotate 10s linear infinite;
+}
+/*========Air Conditioner Widget======*/
+.airConditioner {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  background: linear-gradient(
+    180deg,
+    rgba(22, 24, 32, 0.5) 0%,
+    rgba(32, 34, 42, 0.7) 100%
+  );
+  border-radius: 16px;
+  color: white;
+  font-family: "Arial", sans-serif;
+  max-height: 400px;
+  padding: clamp(8px, 1vw, 12px);
+  gap: 8px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.ac-image {
+  text-align: center;
+}
+.icon img {
+  width: 100px;
+  height: 100px;
+  padding-left: 8px;
+  padding-top: 40px;
+}
+.iconWeather img {
+  width: 170px;
+  height: 170px;
+}
+/*==============Playlist Components==========*/
+/* Playlist section */
+.playlist-musicWidget {
+  margin-top: 20px;
+  border-top: 1px solid #404040;
+  padding-top: 15px;
+}
+
+.playlist-header {
+  margin-bottom: 15px;
+}
+
+.playlist-title {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.playlist-subtitle {
+  font-size: 12px;
+  color: #b3b3b3;
+}
+
+.playlist-items {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.playlist-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin: 4px 0;
+  transition: background 0.2s ease;
+}
+
+.playlist-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.playlist-item.active {
+  background: rgba(29, 185, 84, 0.15);
+}
+
+.track-time {
+  font-size: 14px;
+  color: #b3b3b3;
+  min-width: 40px;
+  margin-right: 15px;
+}
+
+.track-info {
+  flex-grow: 1;
+}
+
+.track-title {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.track-artist {
+  font-size: 12px;
+  color: #b3b3b3;
+}
+
+/* Scrollbar styling */
+.playlist-items::-webkit-scrollbar {
+  width: 6px;
+}
+
+.playlist-items::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.playlist-items::-webkit-scrollbar-thumb {
+  background: #404040;
+  border-radius: 3px;
+}
+
+.main-controls {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  margin-top: -2rem; /* Dịch cả khối controls lên trên */
+}
+
+.temperature-control {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform: scale(0.8);
+  transform-origin: center top;
+}
+
+.temperature-gauge {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform: scale(0.8);
+  transform-origin: center;
+  aspect-ratio: 1 / 1; /* Đảm bảo tỷ lệ luôn là 1:1 */
+  border-radius: 50%;
+}
+
+.gauge-ticks {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 8px solid rgb(31, 41, 55);
+}
+
+.gauge-fill {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    rgb(190, 255, 1) var(--fill-percentage),
+    rgb(32, 32, 32) var(--fill-percentage)
+  );
+  box-shadow: 0 0 30px rgba(190, 255, 0, 0.3), 0 0 20px rgba(190, 255, 0, 0.3);
+  transform-origin: center;
+  transition: all 0.01s ease;
+  overflow: hidden;
+}
+.gauge-dot {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: rgb(190, 255, 0);
+  border-radius: 50%;
+  top: 48%;
+  left: 50%;
+  transform-origin: center;
+  transform: translate(-50%, -50%) rotate(var(--rotation, 0deg))
+    translateY(-100px);
+  box-shadow: 0 0 10px rgb(136, 255, 0), 0 0 20px rgb(255, 255, 255),
+    0 0 30px rgb(255, 255, 255);
+  border: 10px solid rgba(250, 250, 250, 1);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.6), 0 0 5px rgba(255, 255, 255, 0.4),
+    0 0 5px rgba(255, 68, 68, 0.2);
+  transition: transform 0.1s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.1s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+    box-shadow 0.05s ease;
+  cursor: grab;
+  /* transition: transform 0.1s cubic-bezier(0.68, -0.55, 0.27, 1.55); */
+  filter: drop-shadow(0 0 2px rgb(166, 160, 160));
+  z-index: 2;
+}
+/* Thêm hiệu ứng nhấp nháy cho dot */
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) rotate(var(--rotation)) translateY(-100px)
+      scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(var(--rotation)) translateY(-100px)
+      scale(1.2);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(var(--rotation)) translateY(-100px)
+      scale(1);
+  }
+}
+
+.gauge-dot.active {
+  animation: pulse 0.1s infinite;
+  cursor: grabbing;
+}
+.gauge-dot:active {
+  cursor: grabbing;
+}
+.airwave-active {
+  position: relative;
+  overflow: hidden;
+}
+
+.airwave-active::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 75%
+  );
+  animation: airwave 1.5s infinite linear;
+}
+
+@keyframes airwave {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.gauge-ticks {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 8px solid rgb(31, 41, 55);
+}
+
+/* Tạo gauge track */
+.gauge-track {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgb(31, 41, 55);
+  mask: radial-gradient(transparent 62%, black 65%);
+  -webkit-mask: radial-gradient(transparent 62%, black 65%);
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
+/* Điều chỉnh vùng trong của gauge */
+.temperature-wrapper {
+  position: absolute;
+  inset: 2.5rem;
+  background: rgb(17, 24, 39);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.temperature-value {
+  font-size: 3rem;
+  font-weight: 300;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8),
+    0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.temperature-unit {
+  font-size: 3rem;
+  font-weight: 300;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8),
+    0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.right-controls {
+  display: flex;
+  align-items: center;
+}
+.temp-controls {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 70%;
+  transform: translateY(-50%);
+  padding: 0 calc(100% - 40px);
+}
+
+.temp-button {
+  width: 60px;
+  height: 60px;
+  background: rgb(31, 41, 55);
+  border: none;
+  border-radius: 1rem;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: clamp(6px, 1vw, 10px);
+  font-size: 14px;
+}
+.temp-button.decrease {
+  order: -1;
+  left: -50px;
+}
+.temp-button.increase {
+  right: -50px;
+}
+
+.temp-button:hover {
+  background: rgb(55, 65, 81);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+}
+.bottom-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  text-align: center;
+  margin-top: -1.5rem;
+}
+
+.stat-value {
+  font-size: clamp(16px, 2vw, 24px);
+}
+
+.stat-label {
+  color: rgb(156, 163, 175);
+  font-size: 0.875rem;
+}
+.ac-image {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ac-image img {
+  max-width: 19rem; /* Giảm kích thước ảnh */
+  height: auto;
+  aspect-ratio: 1/1;
+  object-fit: contain;
+  margin-top: -12%;
+}
+
+/*============Chart Widget===========*/
+.chart-container {
+  grid-column: 1 / 4;
+  grid-row: 3 / 4;
+  background: linear-gradient(
+    180deg,
+    rgba(22, 24, 32, 0.8) 0%,
+    rgba(32, 34, 42, 1) 100%
+  );
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  position: relative;
+  max-height: 450px;
+}
+
+.chart-title {
+  color: #fff;
+  font-size: clamp(14px, 1.5vw, 18px);
+  font: bold;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+.chart-controls {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.time-range {
+  background: #1a1a1a;
+  border: 1px solid #2196f3;
+  color: #fff;
+  padding: 5px 15px;
+  margin: 0 5px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 20px;
+}
+
+.time-range:hover {
+  background: rgb(34, 211, 238);
+  box-shadow: 0 0 5px rgb(34, 211, 238), 0 0 5px rgb(34, 211, 238),
+    0 0 10px rgba(34, 211, 238, 0.8);
+  color: #000;
+  transform: translateY(-2px);
+}
+
+.time-range.active {
+  background: rgb(34, 211, 238);
+  box-shadow: 0 0 5px rgb(34, 211, 238), 0 0 5px rgb(34, 211, 238),
+    0 0 10px rgba(34, 211, 238, 0.8);
+}
+
+#dataChart {
+  flex: 1;
+  width: 100% !important; /* Force width */
+  height: clamp(300px, 50vh, 300px) !important;
+  min-height: 0; /* Cho phép canvas co lại */
+  /* margin: auto; */
+  position: relative;
+}
+@media (min-width: 1600px) {
+  /* Cho màn hình lớn */
+  .temperature-control {
+    width: 320px;
+    height: 320px;
+  }
+
+  .ac-image img {
+    width: 380px;
+  }
+}
+
+@media (max-width: 1200px) {
+  /* Cho laptop nhỏ */
+  .airConditioner {
+    grid-column: span 1;
+  }
+
+  .chart-container {
+    grid-column: span 1;
+  }
+
+  .temperature-control {
+    width: 120px !important;
+    height: 120px !important;
+  }
+
+  .ac-image img {
+    max-width: 12rem;
+  }
+}
+
+/*============Model Content of realtimeChart===========*/
+/* Modal container */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* height: 100vh; */
+  background-color: rgba(13, 17, 28, 0.85);
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Modal content */
+.modal-content {
+  background: linear-gradient(145deg, #1a1f2e, #232838);
+  margin: 5vh auto;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 85%;
+  max-width: 1200px;
+  color: #ffffff;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transform: translateY(0);
+  animation: slideIn 0.4s ease-out;
+
+  position: absolute;
+  background-color: linear-gradient(145deg, #e8e3e3ef, #eadfdf0a);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 5px;
+  width: 80%;
+  max-width: 500px;
+  animation: modalFadeIn 0.3s;
+}
+
+/* Header area */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* Close button */
+.close {
+  position: relative;
+  color: #6f7787;
+  font-size: 24px;
+  font-weight: 500;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.close:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(90deg);
+  cursor: pointer;
+}
+
+/* Content area */
+.modal-body {
+  padding: 1rem 0;
+}
+
+/* Stats grid example */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin: 1rem 0;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1.25rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.stat-label {
+  font-size: clamp(12px, 1.2vw, 14px);
+  color: #6f7787;
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scrollbar styling */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    margin: 3vh auto;
+    padding: 1.5rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*============FullScreen Feature=========*/
+.fullscreen-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.fullscreen-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.fullscreen-button i {
+  color: white;
+  font-size: 18px;
+}
+
+/* Adjust button position in fullscreen mode */
+:fullscreen .fullscreen-button {
+  top: 30px;
+  right: 30px;
+}
+
+/* Vendor prefixes for different browsers */
+:-webkit-full-screen .fullscreen-button {
+  top: 30px;
+  right: 30px;
+}
+
+:-moz-full-screen .fullscreen-button {
+  top: 30px;
+  right: 30px;
+}
+
+:-ms-fullscreen .fullscreen-button {
+  top: 30px;
+  right: 30px;
+}
