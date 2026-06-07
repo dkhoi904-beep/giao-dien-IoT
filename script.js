@@ -2,7 +2,6 @@
 // 1. KHỞI TẠO ĐỐI TƯỢNG VÀ THIẾT LẬP WIDGET ĐIỀU KHIỂN GIAO DIỆN
 // =========================================================================
 
-// --- Widget Quạt Thông Gió ---
 const fanIcon = document.getElementById("fanIcon");
 const fanStatus = document.getElementById("fanStatus");
 let isFanOn = false;
@@ -20,7 +19,6 @@ fanIcon.addEventListener("click", () => {
   }
 });
 
-// --- Widget Máy Bơm Nước Slider ---
 const pumpSlider = document.getElementById("pumpSlider");
 const pumpValue = document.getElementById("pumpValue");
 const sliderFill = document.querySelector(".slider-fill");
@@ -38,7 +36,27 @@ pumpSlider.addEventListener("input", function () {
   }
 });
 
-// --- Widget Chế Độ Hệ Thống Slider ---
+// --- Điều khiển Đèn Quang Hợp NeoPixel ---
+const ledSlider = document.getElementById("ledSlider");
+const ledValue = document.getElementById("ledValue");
+const ledSliderFill = document.getElementById("ledSliderFill");
+
+ledSlider.addEventListener("input", function () {
+  const val = parseInt(this.value);
+  ledSliderFill.style.width = val + "%";
+  
+  if (val > 0) {
+    ledValue.textContent = val + "%";
+  } else {
+    ledValue.textContent = "TẮT";
+  }
+  
+  // Gửi giá trị độ sáng (0 - 100) trực tiếp về cho ESP32 xử lý qua E-Ra Action
+  if (actionLedDim) {
+    eraWidget.triggerAction(actionLedDim.action, val);
+  }
+});
+
 const modeSlider = document.getElementById("modeSlider");
 const modeStatus = document.getElementById("modeStatus");
 const sliderFillMode = document.querySelector(".slider-fill-livingRoom");
@@ -53,24 +71,6 @@ modeSlider.addEventListener("input", function () {
     sliderFillMode.style.width = "0%";
     modeStatus.textContent = "BẰNG TAY";
     if (actionAutoOff) eraWidget.triggerAction(actionAutoOff.action, null);
-  }
-});
-
-// --- Widget Đèn Giả Lập NeoPixel Ring (MỚI THÊM) ---
-const ledIcon = document.getElementById("ledIcon");
-const ledStatus = document.getElementById("ledStatus");
-let isLedOn = false;
-
-ledIcon.addEventListener("click", () => {
-  isLedOn = !isLedOn;
-  if (isLedOn) {
-    ledIcon.classList.add("active");
-    ledStatus.textContent = "ON";
-    if (actionLedOn) eraWidget.triggerAction(actionLedOn.action, null);
-  } else {
-    ledIcon.classList.remove("active");
-    ledStatus.textContent = "OFF";
-    if (actionLedOff) eraWidget.triggerAction(actionLedOff.action, null);
   }
 });
 
@@ -204,28 +204,23 @@ let configTemp = null, configHumi = null, configLux = null, configSoil = null, c
 let actionFanOn = null, actionFanOff = null;
 let actionPumpOn = null, actionPumpOff = null;
 let actionAutoOn = null, actionAutoOff = null;
-let actionLedOn = null, actionLedOff = null; // Khai báo thêm cặp Action điều khiển LED
+let actionLedDim = null; // Khai báo hành động Dimmer Đèn
 
 eraWidget.init({
   onConfiguration: (configuration) => {
-    // --- Các chân cấu hình cảm biến (Giữ nguyên thứ tự cũ) ---
-    configTemp = configuration.realtime_configs[0]; 
-    configHumi = configuration.realtime_configs[1]; 
-    configLux  = configuration.realtime_configs[2]; 
-    configSoil = configuration.realtime_configs[3]; 
-    configWater = configuration.realtime_configs[4]; 
+    configTemp = configuration.realtime_configs[0]; // Vị trí 1: Nhiệt độ
+    configHumi = configuration.realtime_configs[1]; // Vị trí 2: Độ ẩm không khí
+    configLux  = configuration.realtime_configs[2]; // Vị trí 3: Ánh sáng
+    configSoil = configuration.realtime_configs[3]; // Vị trí 4: Độ ẩm đất
+    configWater = configuration.realtime_configs[4]; // Vị trí 5: Mực nước
 
-    // --- Các cặp Action điều khiển thiết bị đầu ra ---
     actionFanOn   = configuration.actions[0];
     actionFanOff  = configuration.actions[1];
     actionPumpOn  = configuration.actions[2];
     actionPumpOff = configuration.actions[3];
     actionAutoOn  = configuration.actions[4];
     actionAutoOff = configuration.actions[5];
-    
-    // Gán hành động Bật/Tắt Đèn NeoPixel tương ứng với vị trí thứ 7 và thứ 8 trên Era
-    actionLedOn   = configuration.actions[6];
-    actionLedOff  = configuration.actions[7];
+    actionLedDim  = configuration.actions[6]; // Vị trí số 7 trên Dashboard E-Ra
   },
   onValues: (values) => {
     let currentTempRaw = NaN;
