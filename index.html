@@ -16,9 +16,8 @@
   </head>
   <body>
     <div class="container">
-      <!-- Thanh điều hướng bên trái (Sidebar) -->
       <div class="sidebar">
-        <i class="fas fa-seedling active"> </i>
+        <i class="fas fa-seedling active"> </i> 
         <i class="fas fa-tint"> </i>
         <i class="fas fa-fan"> </i>
         <i class="fas fa-chart-line"> </i>
@@ -27,7 +26,6 @@
         <i class="fas fa-user"> </i>
       </div>
 
-      <!-- Khu vực nội dung chính Dashboard -->
       <div class="main-content">
         <div class="nav">
           <div>
@@ -44,7 +42,6 @@
         </div>
 
         <div class="widgets">
-          <!-- WIDGET 1: ĐIỀU KHIỂN QUẠT THÔNG GIÓ (Chân V2) -->
           <div class="widget bedLight-widget">
             <div class="title">Quạt Thông Gió</div>
             <div class="content-wrapper">
@@ -55,7 +52,6 @@
             </div>
           </div>
 
-          <!-- WIDGET 2: ĐIỀU KHIỂN MÁY BƠM NƯỚC (Chân V3) -->
           <div class="widget apple-style">
             <div class="widget-header">
               <div class="icon">
@@ -74,7 +70,6 @@
             </div>
           </div>
 
-          <!-- WIDGET 3: CHẾ ĐỘ VẬN HÀNH AUTO/MANUAL (Chân V5) -->
           <div class="widget livingRoom-widget">
             <div class="widget-header">
               <div class="icon">
@@ -93,7 +88,16 @@
             </div>
           </div>
 
-          <!-- WIDGET 4: ĐỘ ẨM KHÔNG KHÍ (Chân V1) -->
+          <div class="widget bedLight-widget">
+            <div class="title">Đèn Giả Lập (NeoPixel)</div>
+            <div class="content-wrapper">
+              <div class="light-icon" id="ledIcon">
+                <img src="https://img.icons8.com/fluency/96/light-bulb.png" alt="imgLed"/>
+              </div>
+              <div class="status" id="ledStatus">OFF</div>
+            </div>
+          </div>
+
           <div class="widget humidifier-widget">
             <div class="title">Độ Ẩm Không Khí</div>
             <div class="gauge humidifier neon" style="--value: 0" id="gaugeHumid">
@@ -106,7 +110,6 @@
             </div>
           </div>
 
-          <!-- WIDGET 5: NHIỆT ĐỘ MÔI TRƯỜNG (Chân V0) -->
           <div class="widget temp-widget">
             <div class="title">Nhiệt Độ Môi Trường</div>
             <div class="gauge temp neon" style="--value: 0" id="gaugeTemp">
@@ -119,36 +122,33 @@
             </div>
           </div>
 
-          <!-- WIDGET 6: ĐỘ ẨM ĐẤT (Sửa từ widget Thời tiết cũ - Chân V6) -->
           <div class="widget weather-widget">
             <div class="weather-header">
               <div class="weather-main">
-                <h1 class="weather-title">Độ Ẩm Đất</h1>
-                <div class="weather-subtitle">Cảm biến Analog</div>
-                <div class="weather-temp" id="valSoil">0</div>
+                <h1 class="weather-title"><i class="fas fa-seedling"></i> Độ Ẩm Đất</h1>
+                <div class="weather-subtitle">Cảm biến Soil</div>
+                <div class="weather-temp" id="valSoil">--%</div>
               </div>
             </div>
-            <div class="canvas-container">
+            <div class="canvas-container" id="weather-canvas">
               <div class="iconWeather">
-                <img src="assets/imgs/soil.png" alt="iconSoil" onerror="this.src='https://img.icons8.com/fluency/96/soil.png'"/>
+                <img src="assets/imgs/soil.png" alt="icon" onerror="this.src='https://img.icons8.com/fluency/96/potted-plant.png'"/>
               </div>
             </div>
           </div>
 
-          <!-- WIDGET 7: ÁNH SÁNG LUX & MỰC NƯỚC BỂ CHỨA (Chân V4 & V7) -->
-          <div class="widget weather-widget" style="background: linear-gradient(145deg, #11998e, #38ef7d);">
+          <div class="widget weather-widget" style="background: linear-gradient(145deg, #1e3c72, #2a5298);">
             <div class="weather-header">
               <div class="weather-main">
-                <h1 class="weather-title" style="font-size: 1.2rem; color: #fff;"><i class="fas fa-sun"></i> Ánh Sáng BH1750</h1>
-                <div class="weather-temp" id="valLux" style="font-size: 2rem; margin-top: 5px; color: #fff;">0 lx</div>
-                
-                <h1 class="weather-title" style="font-size: 1.2rem; color: #fff; margin-top: 20px;"><i class="fas fa-water"></i> Mực Nước Bể</h1>
-                <div class="weather-temp" id="valWater" style="font-size: 2rem; margin-top: 5px; color: #fff;">0</div>
+                <h1 class="weather-title" style="font-size: 1.2rem;"><i class="fas fa-sun"></i> Ánh Sáng BH1750</h1>
+                <div class="weather-temp" id="valLux" style="font-size: 2rem; margin-top: 10px;">0 lx</div>
+                <p style="margin-top: 15px; font-size: 1.1rem; font-weight: bold; color: #4fc3f7; opacity: 0.9;" id="waterLevelDisplay">
+                  <i class="fas fa-water"></i> Mực nước: -- %
+                </p>
               </div>
             </div>
           </div>
 
-          <!-- WIDGET 8: ĐỒ THỊ THỐNG KÊ (Giữ nguyên) -->
           <div class="widget chart-container">
             <div class="chart-title">Thống Kê Dữ Liệu Thời Gian Thực</div>
             <canvas id="dataChart"></canvas>
@@ -158,7 +158,6 @@
             </div>
           </div>
 
-          <!-- MODAL LỊCH SỬ -->
           <div id="statsModal" class="modal">
             <div class="modal-content">
               <span class="close">&times;</span>
