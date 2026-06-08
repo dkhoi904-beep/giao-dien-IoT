@@ -1,39 +1,7 @@
 // =========================================================================
 // 1. KHỞI TẠO ĐỐI TƯỢNG VÀ THIẾT LẬP WIDGET ĐIỀU KHIỂN GIAO DIỆN
 // =========================================================================
-// Thêm đoạn này vào khu vực Khởi tạo đối tượng điều khiển giao diện (Mục 1)
-const ledSlider = document.getElementById("ledSlider");
-const ledValue = document.getElementById("ledValue");
-const ledSliderFill = document.getElementById("ledSliderFill");
 
-ledSlider.addEventListener("input", function () {
-  const val = parseInt(this.value);
-  ledSliderFill.style.width = val + "%";
-  
-  if (val > 0) {
-    ledValue.textContent = val + "%";
-  } else {
-    ledValue.textContent = "TẮT";
-  }
-  
-  // Gửi trực tiếp giá trị độ sáng số (0 - 100) về cho ESP32 thông qua Action tương ứng
-  if (actionLedDim) {
-    eraWidget.triggerAction(actionLedDim.action, val);
-  }
-});
-
-// Cập nhật lại trong hàm eraWidget.init (Mục 3) để hứng cấu hình Action số 7
-let actionLedDim = null;
-
-eraWidget.init({
-  onConfiguration: (configuration) => {
-    // ... Giữ nguyên các dòng config từ [0] đến [5] của bạn ...
-    actionLedDim  = configuration.actions[6]; // Hứng Action thứ 7 trên Dashboard E-Ra
-  },
-  onValues: (values) => {
-    // ... Giữ nguyên các hàm onValues cũ ...
-  }
-});
 const fanIcon = document.getElementById("fanIcon");
 const fanStatus = document.getElementById("fanStatus");
 let isFanOn = false;
@@ -68,7 +36,7 @@ pumpSlider.addEventListener("input", function () {
   }
 });
 
-// --- Điều khiển Đèn Quang Hợp NeoPixel ---
+// --- Điều khiển Đèn Quang Hợp NeoPixel (Độ sáng 0 - 100%) ---
 const ledSlider = document.getElementById("ledSlider");
 const ledValue = document.getElementById("ledValue");
 const ledSliderFill = document.getElementById("ledSliderFill");
@@ -83,7 +51,7 @@ ledSlider.addEventListener("input", function () {
     ledValue.textContent = "TẮT";
   }
   
-  // Gửi giá trị độ sáng (0 - 100) trực tiếp về cho ESP32 xử lý qua E-Ra Action
+  // Gửi giá trị số (0-100) về ESP32
   if (actionLedDim) {
     eraWidget.triggerAction(actionLedDim.action, val);
   }
@@ -107,7 +75,7 @@ modeSlider.addEventListener("input", function () {
 });
 
 // =========================================================================
-// 2. KHỞI TẠO VÀ XỬ LÝ ĐỒ THỊ THỜI GIAN THỰC (REALTIME CHART)
+// 2. ĐỒ THỊ THỜI GIAN THỰC
 // =========================================================================
 let myChart;
 let chartData = [];
@@ -229,22 +197,22 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // =========================================================================
-// 3. KẾT NỐI VÀ ĐỒNG BỘ DỮ LIỆU QUA DỊCH VỤ E-RA PLATFORM
+// 3. ĐỒNG BỘ DỮ LIỆU QUA DỊCH VỤ E-RA PLATFORM
 // =========================================================================
 const eraWidget = new EraWidget();
 let configTemp = null, configHumi = null, configLux = null, configSoil = null, configWater = null; 
 let actionFanOn = null, actionFanOff = null;
 let actionPumpOn = null, actionPumpOff = null;
 let actionAutoOn = null, actionAutoOff = null;
-let actionLedDim = null; // Khai báo hành động Dimmer Đèn
+let actionLedDim = null; 
 
 eraWidget.init({
   onConfiguration: (configuration) => {
-    configTemp = configuration.realtime_configs[0]; // Vị trí 1: Nhiệt độ
-    configHumi = configuration.realtime_configs[1]; // Vị trí 2: Độ ẩm không khí
-    configLux  = configuration.realtime_configs[2]; // Vị trí 3: Ánh sáng
-    configSoil = configuration.realtime_configs[3]; // Vị trí 4: Độ ẩm đất
-    configWater = configuration.realtime_configs[4]; // Vị trí 5: Mực nước
+    configTemp = configuration.realtime_configs[0]; 
+    configHumi = configuration.realtime_configs[1]; 
+    configLux  = configuration.realtime_configs[2]; 
+    configSoil = configuration.realtime_configs[3]; 
+    configWater = configuration.realtime_configs[4]; 
 
     actionFanOn   = configuration.actions[0];
     actionFanOff  = configuration.actions[1];
@@ -252,7 +220,9 @@ eraWidget.init({
     actionPumpOff = configuration.actions[3];
     actionAutoOn  = configuration.actions[4];
     actionAutoOff = configuration.actions[5];
-    actionLedDim  = configuration.actions[6]; // Vị trí số 7 trên Dashboard E-Ra
+    
+    // Vị trí số 7: Điều khiển độ sáng đèn LED (Nhận giá trị số)
+    actionLedDim  = configuration.actions[6]; 
   },
   onValues: (values) => {
     let currentTempRaw = NaN;
@@ -260,33 +230,28 @@ eraWidget.init({
 
     if (configTemp && values[configTemp.id]) {
       currentTempRaw = values[configTemp.id].value;
-      const roundedTemp = Number(currentTempRaw).toFixed(1);
-      updateTempGauge(roundedTemp);
+      updateTempGauge(Number(currentTempRaw).toFixed(1));
     }
 
     if (configHumi && values[configHumi.id]) {
       currentHumRaw = values[configHumi.id].value;
-      const roundedHum = Number(currentHumRaw).toFixed(1);
-      updateHumidGauge(roundedHum);
+      updateHumidGauge(Number(currentHumRaw).toFixed(1));
     }
 
     if (configLux && values[configLux.id]) {
-      const luxValue = Number(values[configLux.id].value).toFixed(1);
       const valLuxElement = document.getElementById("valLux");
-      if (valLuxElement) valLuxElement.textContent = luxValue + " lx";
+      if (valLuxElement) valLuxElement.textContent = Number(values[configLux.id].value).toFixed(1) + " lx";
     }
 
     if (configSoil && values[configSoil.id]) {
-      const soilValue = Number(values[configSoil.id].value).toFixed(1);
       const valSoilElement = document.getElementById("valSoil");
-      if (valSoilElement) valSoilElement.textContent = soilValue + " %";
+      if (valSoilElement) valSoilElement.textContent = Number(values[configSoil.id].value).toFixed(1) + " %";
     }
 
     if (configWater && values[configWater.id]) {
-      const waterValue = Number(values[configWater.id].value).toFixed(1);
       const waterLevelDisplay = document.getElementById("waterLevelDisplay");
       if (waterLevelDisplay) {
-        waterLevelDisplay.innerHTML = `<i class="fas fa-water"></i> Mực nước: ${waterValue} %`;
+        waterLevelDisplay.innerHTML = `<i class="fas fa-water"></i> Mực nước: ${Number(values[configWater.id].value).toFixed(1)} %`;
       }
     }
 
@@ -297,7 +262,7 @@ eraWidget.init({
 });
 
 // =========================================================================
-// 4. TÍNH NĂNG TOÀN MÀN HÌNH (FULLSCREEN FEATURE)
+// 4. TÍNH NĂNG TOÀN MÀN HÌNH (FULLSCREEN)
 // =========================================================================
 const fullscreenButton = document.createElement("button");
 fullscreenButton.innerHTML = '<i class="fas fa-expand"></i>';
@@ -305,7 +270,7 @@ fullscreenButton.className = "fullscreen-button";
 document.body.appendChild(fullscreenButton);
 
 let isFullscreen = false;
-function toggleFullscreen() {
+fullscreenButton.addEventListener("click", () => {
   if (!isFullscreen) {
     if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
     fullscreenButton.innerHTML = '<i class="fas fa-compress"></i>';
@@ -314,5 +279,4 @@ function toggleFullscreen() {
     fullscreenButton.innerHTML = '<i class="fas fa-expand"></i>';
   }
   isFullscreen = !isFullscreen;
-}
-fullscreenButton.addEventListener("click", toggleFullscreen);
+});
