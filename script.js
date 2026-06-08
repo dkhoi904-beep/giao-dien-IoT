@@ -211,8 +211,8 @@ eraWidget.init({
     configTemp = configuration.realtime_configs[0]; // Vị trí 1: Nhiệt độ
     configHumi = configuration.realtime_configs[1]; // Vị trí 2: Độ ẩm không khí
     configLux  = configuration.realtime_configs[2]; // Vị trí 3: Ánh sáng
-    configWater = configuration.realtime_configs[3]; // Vị trí 4: Độ ẩm đất
-    configSoil = configuration.realtime_configs[4]; // Vị trí 5: Mực nước
+    configSoil = configuration.realtime_configs[3]; // Vị trí 4: Độ ẩm đất
+    configWater = configuration.realtime_configs[4]; // Vị trí 5: Mực nước
 
     actionFanOn   = configuration.actions[0];
     actionFanOff  = configuration.actions[1];
