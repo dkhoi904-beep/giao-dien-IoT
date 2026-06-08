@@ -1,7 +1,39 @@
 // =========================================================================
 // 1. KHỞI TẠO ĐỐI TƯỢNG VÀ THIẾT LẬP WIDGET ĐIỀU KHIỂN GIAO DIỆN
 // =========================================================================
+// Thêm đoạn này vào khu vực Khởi tạo đối tượng điều khiển giao diện (Mục 1)
+const ledSlider = document.getElementById("ledSlider");
+const ledValue = document.getElementById("ledValue");
+const ledSliderFill = document.getElementById("ledSliderFill");
 
+ledSlider.addEventListener("input", function () {
+  const val = parseInt(this.value);
+  ledSliderFill.style.width = val + "%";
+  
+  if (val > 0) {
+    ledValue.textContent = val + "%";
+  } else {
+    ledValue.textContent = "TẮT";
+  }
+  
+  // Gửi trực tiếp giá trị độ sáng số (0 - 100) về cho ESP32 thông qua Action tương ứng
+  if (actionLedDim) {
+    eraWidget.triggerAction(actionLedDim.action, val);
+  }
+});
+
+// Cập nhật lại trong hàm eraWidget.init (Mục 3) để hứng cấu hình Action số 7
+let actionLedDim = null;
+
+eraWidget.init({
+  onConfiguration: (configuration) => {
+    // ... Giữ nguyên các dòng config từ [0] đến [5] của bạn ...
+    actionLedDim  = configuration.actions[6]; // Hứng Action thứ 7 trên Dashboard E-Ra
+  },
+  onValues: (values) => {
+    // ... Giữ nguyên các hàm onValues cũ ...
+  }
+});
 const fanIcon = document.getElementById("fanIcon");
 const fanStatus = document.getElementById("fanStatus");
 let isFanOn = false;
